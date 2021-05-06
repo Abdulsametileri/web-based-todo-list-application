@@ -4,6 +4,7 @@ import (
 	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
+	"sort"
 )
 
 type Todo struct {
@@ -14,11 +15,8 @@ type Todo struct {
 var todoDatabase map[int]Todo
 
 var (
+	MsgTodoAdded              = "Todo has been succesfully added."
 	ErrTodoDescriptionIsEmpty = errors.New("Todo description cannnot be empty.")
-)
-
-var (
-	MsgTodoAdded = "Todo has been succesfully added."
 )
 
 type TodoInput struct {
@@ -41,8 +39,19 @@ func NewTodoController(bctl BaseController) TodoController {
 	}
 }
 
+// curl -H "Content-type: application/json" localhost:3000/api/v1/getTodoList
 func (t todoController) GetTodoList(c *gin.Context) {
-	panic("implement me")
+	todoList := make([]Todo, 0, len(todoDatabase))
+
+	for _, todo := range todoDatabase {
+		todoList = append(todoList, todo)
+	}
+
+	sort.Slice(todoList, func(i, j int) bool {
+		return todoList[i].Id < todoList[j].Id
+	})
+
+	t.base.Data(c, http.StatusOK, todoList, "")
 }
 
 // curl -H "Content-type: application/json" -X POST -d '{"task_description":"dummy"}' localhost:3000/api/v1/addTodo

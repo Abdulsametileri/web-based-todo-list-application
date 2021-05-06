@@ -57,11 +57,3 @@ func main() {
 
 	srv.Shutdown(ctx)
 }
-
-func todos(c *gin.Context) {
-
-}
-
-func todo(c *gin.Context) {
-
-}
