@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import API from './api'
 
 export default {
   data() {
@@ -30,14 +30,11 @@ export default {
         return
 
       try {
-        const {data} = await axios
-            .post(`${process.env.VUE_APP_BASE_API_URL}/addTodo`, {
-              task_description: this.todo
-            })
-        this.todoList.push(data.data)
+        const {data} = await API.addTodo(this.todo)
+        this.todoList.push(data)
       } catch (e) {
-        this.error = e
         console.error(e)
+        this.error = e
       } finally {
         this.todo = ''
       }
@@ -45,11 +42,11 @@ export default {
   },
   async created() {
     try {
-      const {data} = await axios.get(`${process.env.VUE_APP_BASE_API_URL}/getTodoList`)
-      this.todoList = data.data
+      const {data} = await API.getTodoList()
+      this.todoList = data
     } catch (e) {
-      this.error = e
       console.error(e)
+      this.error = e
     }
   }
 }
