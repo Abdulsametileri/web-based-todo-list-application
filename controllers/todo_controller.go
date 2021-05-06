@@ -24,8 +24,8 @@ type TodoInput struct {
 }
 
 type TodoController interface {
-	GetTodoList(ctx *gin.Context)
-	AddTodo(ctx *gin.Context)
+	GetTodoList(c *gin.Context)
+	AddTodo(c *gin.Context)
 }
 
 type todoController struct {

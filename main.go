@@ -28,6 +28,8 @@ func main() {
 	baseCtl := controllers.NewBaseController()
 	todoCtl := controllers.NewTodoController(baseCtl)
 
+	router.Use(corsMiddleware())
+
 	router.GET("/ping", func(c *gin.Context) { c.String(http.StatusOK, "pong") })
 
 	v1 := router.Group("api/v1")
@@ -56,4 +58,26 @@ func main() {
 	ctx, _ := context.WithTimeout(context.Background(), 15*time.Second)
 
 	srv.Shutdown(ctx)
+}
+
+func corsMiddleware() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if config.IsDebug {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
+		} else {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
+		}
+
+		c.Writer.Header().Set("Access-Control-Max-Age", "86400")
+		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+		c.Writer.Header().Set("Access-Control-Allow-Headers", "Origin, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		c.Writer.Header().Set("Access-Control-Expose-Headers", "Content-Length")
+		c.Writer.Header().Set("Access-Control-Allow-Credentials", "true")
+
+		if c.Request.Method == "OPTIONS" {
+			c.AbortWithStatus(200)
+		} else {
+			c.Next()
+		}
+	}
 }
