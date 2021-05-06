@@ -2,7 +2,7 @@ import {shallowMount} from "@vue/test-utils";
 import App from "@/App";
 
 describe('App.vue', () => {
-    it('add a todo when clicking the button', async () => {
+    it('should add a todo when user enters input and clicks the button', async () => {
         const wrapper = shallowMount(App)
 
         const inputToAdd = "dummy todo"
