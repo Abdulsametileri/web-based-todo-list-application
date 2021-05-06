@@ -25,7 +25,8 @@ func main() {
 		router.Use(gin.Logger())
 	}
 
-	todoCtl := controllers.NewTodoController()
+	baseCtl := controllers.NewBaseController()
+	todoCtl := controllers.NewTodoController(baseCtl)
 
 	router.GET("/ping", func(c *gin.Context) { c.String(http.StatusOK, "pong") })
 
