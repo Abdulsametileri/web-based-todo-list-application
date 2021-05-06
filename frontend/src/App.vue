@@ -6,27 +6,50 @@
     <button @click="addTodo">Add</button>
 
     <section class="todo-list">
-      <p v-for="(todo, index) in todoList" :key="index">{{ index + 1 }}. {{ todo }}</p>
+      <p v-for="(todo, index) in todoList" :key="index">{{ index + 1 }}. {{ todo.description }}</p>
     </section>
+
+    <p>{{ error }}</p>
   </div>
 </template>
 
 <script>
+import axios from 'axios'
+
 export default {
   data() {
     return {
       todo: '',
       todoList: [],
+      error: ''
     }
   },
   methods: {
-    addTodo() {
+    async addTodo() {
       if (this.todo === '')
         return
 
-      this.todoList.push(this.todo)
-
-      this.todo = ''
+      try {
+        const {data} = await axios
+            .post(`${process.env.VUE_APP_BASE_API_URL}/addTodo`, {
+              task_description: this.todo
+            })
+        this.todoList.push(data.data)
+      } catch (e) {
+        this.error = e
+        console.error(e)
+      } finally {
+        this.todo = ''
+      }
+    }
+  },
+  async created() {
+    try {
+      const {data} = await axios.get(`${process.env.VUE_APP_BASE_API_URL}/getTodoList`)
+      this.todoList = data.data
+    } catch (e) {
+      this.error = e
+      console.error(e)
     }
   }
 }
