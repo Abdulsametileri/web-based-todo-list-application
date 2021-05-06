@@ -1,32 +1,43 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view/>
+    <h1>Todo App</h1>
+
+    <input id="todo-input" v-model="todo"/>
+    <button @click="addTodo">Add</button>
+
+    <section class="todo-list">
+      <p v-for="(todo, index) in todoList" :key="index">{{ index + 1 }}. {{ todo }}</p>
+    </section>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      todo: '',
+      todoList: [],
+    }
+  },
+  methods: {
+    addTodo() {
+      if (this.todo === '')
+        return
+
+      this.todoList.push(this.todo)
+
+      this.todo = ''
+    }
+  }
+}
+</script>
 
 <style lang="scss">
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
   color: #2c3e50;
-}
-
-#nav {
-  padding: 30px;
-
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+  text-align: center;
 }
 </style>
