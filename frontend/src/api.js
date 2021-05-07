@@ -22,7 +22,9 @@ export class API {
     }
 
     async getTodoList() {
-        return axios.get(this.withPath('/getTodoList')).then(r => r.data)
+        return axios
+            .get(this.withPath('/getTodoList'))
+            .then(r => r.data)
     }
 
     async addTodo(todo) {

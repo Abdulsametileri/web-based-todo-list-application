@@ -2,9 +2,9 @@ import {shallowMount} from "@vue/test-utils";
 import flushPromises from "flush-promises";
 import App from "@/App";
 
-jest.mock("axios", () => ({
-    get: () => Promise.resolve({ data: { data: [] } }),
-    post: () => Promise.resolve({ data: { data: { id: 0, description: 'dummy todo' }} })
+jest.mock("@/api", () => ({
+    getTodoList: () => Promise.resolve({data: []}),
+    addTodo: (todo) => Promise.resolve({data: {id: 0, description: 'dummy todo'}})
 }));
 
 describe('App.vue', () => {
