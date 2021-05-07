@@ -54,6 +54,8 @@ func TestTodoController(t *testing.T) {
 
 	t.Run("getTodoList", func(t *testing.T) {
 		t.Run("Get empty list when no todo is available", func(t *testing.T) {
+			todoDatabase = make(map[int]Todo, 0)
+
 			w := httptest.NewRecorder()
 			c, _ := gin.CreateTestContext(w)
 

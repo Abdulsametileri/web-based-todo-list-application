@@ -3,7 +3,7 @@ dry-run: null
 hookfiles: null
 language: nodejs
 require: null
-server: yarn serve
+server: go run --tags dev ../main.go
 server-wait: 3
 init: false
 custom: {}
