@@ -10,7 +10,7 @@ services:
       - "3000:3000"
 
   nginx-frontend:
-    build: frontend/
+    build: frontend/prod-build
     restart: always
     ports:
       - "8080:80"
