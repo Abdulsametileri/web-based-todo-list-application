@@ -12,7 +12,13 @@ jobs:
     container: cypress/browsers:node12.18.3-chrome87-ff82
     steps:
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@master
+        with:
+          node-version: 14
+
       - name: Run cypress tests
         working-directory: './frontend'
-        run: npm run test:e2e
+        run: |
+            npm install        
+            npm run test:e2e
         continue-on-error: false
