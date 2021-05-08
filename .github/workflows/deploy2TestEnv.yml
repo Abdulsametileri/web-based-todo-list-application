@@ -24,9 +24,13 @@ jobs:
 
       #- name: Docker Compose build and up
        # run: docker-compose -f docker-compose-test.yml up --build -d
+       
+      - name: API-consumer-driven-contract-test
+        working-directory: 'frontend'
+        run: docker build -f Dockerfile-contractTests -t dredd .
 
-      - name: Cypress run
-        uses: cypress-io/github-action@v2
-        with:
-          start: npm run test:e2e
+#      - name: Cypress run
+#        uses: cypress-io/github-action@v2
+#        with:
+#          start: npm run test:e2e
 
