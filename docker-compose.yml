@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  backend:
+    build: "."
+    restart: always
+    networks:
+      - app-network
+    ports:
+      - "3000:3000"
+
+  nginx-frontend:
+    build: frontend/
+    restart: always
+    ports:
+      - "8080:80"
+    networks:
+      - app-network
+    depends_on:
+      - backend
+
+networks:
+  app-network:
