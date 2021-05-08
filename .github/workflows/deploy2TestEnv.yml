@@ -19,15 +19,15 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      - name: Docker Compose down
-        run: docker-compose -f docker-compose-test.yml down
+      #- name: Docker Compose down
+       # run: docker-compose -f docker-compose-test.yml down
 
-      - name: Docker Compose build and up
-        run: docker-compose -f docker-compose-test.yml up --build -d
+      #- name: Docker Compose build and up
+       # run: docker-compose -f docker-compose-test.yml up --build -d
 
       - uses: actions/setup-node@master
-          with:
-            node-version: 14
+        with:
+          node-version: 12
 
       - name: Run UI-acceptance tests
         working-directory: './frontend'
