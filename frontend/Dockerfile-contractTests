@@ -1,0 +1,4 @@
+FROM node:lts-alpine
+RUN npm install dredd --global
+COPY api-description.apib ./
+RUN dredd api-description.apib http://ec2-3-126-245-149.eu-central-1.compute.amazonaws.com:8080
