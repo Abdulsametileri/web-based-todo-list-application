@@ -13,8 +13,6 @@ import (
 )
 
 func main() {
-	config.Setup()
-
 	if !config.IsDebug {
 		gin.SetMode(gin.ReleaseMode)
 	}
