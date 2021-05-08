@@ -8,7 +8,7 @@ describe('My First Test', () => {
   it('Type todo and click to add new todo', () => {
     cy.get('input').type('testtset')
     cy.get('button').click()
-    cy.get('.todo-list').get('p').contains('testtset')
+    cy.get('.todo-list').contains('testtset')
     cy.get('input').empty
   })
 })

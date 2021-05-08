@@ -25,3 +25,14 @@ jobs:
       - name: Docker Compose build and up
         run: docker-compose -f docker-compose-test.yml up --build -d
 
+      - uses: actions/setup-node@master
+          with:
+            node-version: 14
+
+      - name: Run UI-acceptance tests
+        working-directory: './frontend'
+        run: |
+          npm install
+          npm run test:e2e
+        continue-on-error: false
+
