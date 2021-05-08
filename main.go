@@ -63,6 +63,7 @@ func corsMiddleware() gin.HandlerFunc {
 		if config.IsDebug {
 			c.Writer.Header().Set("Access-Control-Allow-Origin", "http://localhost:8080")
 		} else {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", "http://ec2-52-59-226-235.eu-central-1.compute.amazonaws.com:8080")
 			c.Writer.Header().Set("Access-Control-Allow-Origin", "http://ec2-3-126-245-149.eu-central-1.compute.amazonaws.com:8080")
 		}
 

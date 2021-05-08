@@ -6,9 +6,9 @@ describe('My First Test', () => {
     cy.contains('h1', 'Todo App')
   })
   it('Type todo and click to add new todo', () => {
-    cy.get('input').type('Dummy todo')
+    cy.get('input').type('testtset')
     cy.get('button').click()
-    cy.get('p').contains('1. Dummy todo')
+    cy.get('.todo-list').get('p').contains('testtset')
     cy.get('input').empty
   })
 })

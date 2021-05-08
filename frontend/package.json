@@ -6,7 +6,7 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test:unit": "vue-cli-service test:unit",
-    "test:e2e": "vue-cli-service test:e2e",
+    "test:e2e": "vue-cli-service test:e2e --headless --url http://ec2-3-126-245-149.eu-central-1.compute.amazonaws.com:8080",
     "test:api": "dredd",
     "lint": "vue-cli-service lint"
   },
