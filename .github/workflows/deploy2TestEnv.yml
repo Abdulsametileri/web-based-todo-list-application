@@ -25,14 +25,8 @@ jobs:
       #- name: Docker Compose build and up
        # run: docker-compose -f docker-compose-test.yml up --build -d
 
-      - uses: actions/setup-node@master
+      - name: Cypress run
+        uses: cypress-io/github-action@v2
         with:
-          node-version: 12
-
-      - name: Run UI-acceptance tests
-        working-directory: './frontend'
-        run: |
-          npm install
-          npm run test:e2e
-        continue-on-error: false
+          start: npm run test:e2e
 
