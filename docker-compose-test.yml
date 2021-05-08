@@ -13,7 +13,7 @@ services:
     build:
       context: ./frontend/
       args:
-        - NGINX_ENV=test
+        - ENV=test
     restart: always
     ports:
       - "8080:80"
