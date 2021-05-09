@@ -12,6 +12,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Docker system prune
+        run: docker system prune -f
+
       - name: Docker Compose down
         run: docker-compose -f docker-compose-test.yml down
 
@@ -20,8 +23,8 @@ jobs:
        
       - name: API-consumer-driven-contract-test
         working-directory: 'frontend'
-        run: docker build -f Dockerfile-contractTests -t dredd .
+        run: docker build -f Dockerfile-contractTests -t dredd . && docker image rm dredd
 
       - name: UI Acceptance tests
         working-directory: 'frontend'
-        run: docker build -f Dockerfile-e2e -t cypress .
+        run: docker build -f Dockerfile-e2e -t cypress . && docker image rm cypress

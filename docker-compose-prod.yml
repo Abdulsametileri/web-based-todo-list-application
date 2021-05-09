@@ -2,7 +2,10 @@ version: '3.9'
 
 services:
   backend:
-    build: "."
+    build:
+      context: "."
+      args:
+        - ENV=prod
     restart: always
     networks:
       - app-network
@@ -10,7 +13,10 @@ services:
       - "3000:3000"
 
   nginx-frontend:
-    build: frontend/prod-build
+    build:
+      context: ./frontend/
+      args:
+        - ENV=prod
     restart: always
     ports:
       - "8080:80"
