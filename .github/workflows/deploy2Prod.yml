@@ -1,6 +1,8 @@
 name: Production Enviroment CI
 
 on:
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
   workflow_dispatch:
@@ -11,6 +13,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+
+      - name: Docker system prune
+        run: docker system prune -f
 
       - name: Docker Compose down
         run: docker-compose -f docker-compose-prod.yml down
