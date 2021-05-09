@@ -33,20 +33,20 @@
 
 <li>Nginx (Web server)
     <ol>
-        <li>`nginx-prod.conf` => Production</li>
-        <li>`nginx-test.conf` => Development</li>
+        <li>nginx-prod.conf => Production</li>
+        <li>nginx-test.conf => Development</li>
     </ol>
 </li>
 
 
 <li>Github Actions (CI)
     <ol>
-        <li>`deploy2TestEnv.yml` for test enviroment (Brach: [test]) </li>
-        <li>`deploy2ProdEnv.yml` for production enviroment (Branch: [master]) </li>
+        <li>deploy2TestEnv.yml for test enviroment (Brach: [test]) </li>
+        <li>deploy2ProdEnv.yml for production enviroment (Branch: [master]) </li>
     </ol>
-    **All workflows runs on 'self-hosted' means our AWS machines.** <br/> 
-    Test env: **aws-ec2-test** <br/> 
-    Prod evv: **aws-ec2**
+    All workflows runs on 'self-hosted' means our AWS machines. <br/> 
+    Test env: aws-ec2-test <br/> 
+    Prod evv: aws-ec2 <br/>
     (Reason of the choosing Github Actions for CI/CD, my experience)
 </li>
 
@@ -98,7 +98,7 @@ I wanted to run ui acceptance test and api consumer driven contract test
 in live enviroment in different server. 
 (Reason of the choosing AWS, just experience)
 
-3. I created two nginx-{test-prod} file because of the differentation of server name in nginx conf.
+3. I created two nginx-{test,prod} file because of the differentation of server name in nginx conf.
 With this distinction I could handle cors etc. easily
 
 ```
