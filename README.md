@@ -17,7 +17,7 @@
     <ol>
         <li>gin (web framework)</li>
         <li>testify (test framework)</li>
-        <li>**map for in-memory database**</li>
+        <li>map for in-memory database</li>
         <li>build tags for go compiler [dev, prod, testenv]</li>
     </ol>
 </li>
@@ -98,7 +98,7 @@ I wanted to run ui acceptance test and api consumer driven contract test
 in live enviroment in different server. 
 (Reason of the choosing AWS, just experience)
 
-3. I created two nginx-{test-conf} file because of the differentation of server name.
+3. I created two nginx-{test-prod} file because of the differentation of server name in nginx conf.
 With this distinction I could handle cors etc. easily
 
 ```
@@ -199,7 +199,7 @@ For tests:
 
 `[GET]` `api/v1/getTodolist` 
 
-`$ curl -H "Content-type: application/json" localhost:3000/api/v1/getTodoList`
+`$ curl -H "Content-type: application/json" -X POST -d '{"task_description":"dummy"}' localhost:3000/api/v1/addTodo`
 
 For the frontend development server you can run 
 
