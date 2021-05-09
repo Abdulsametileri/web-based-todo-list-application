@@ -1,28 +1,30 @@
-name: CI
+name: Test Enviroment CI
 
 on:
   push:
     branches: [ test ]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  # This workflow contains a single job called "build"
   deploy:
-    # The type of runner that the job will run on
     runs-on: aws-ec2-test
 
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
-      # Runs a single command using the runners shell
+      - name: Docker system prune
+        run: docker system prune -f
+
       - name: Docker Compose down
-        run: docker-compose down
+        run: docker-compose -f docker-compose-test.yml down
 
       - name: Docker Compose build and up
-        run: docker-compose up --build -d
+        run: docker-compose -f docker-compose-test.yml up --build -d
+       
+      - name: API-consumer-driven-contract-test
+        working-directory: 'frontend'
+        run: docker build -f Dockerfile-contractTests -t dredd . && docker image rm dredd
 
+      - name: UI Acceptance tests
+        working-directory: 'frontend'
+        run: docker build -f Dockerfile-e2e -t cypress . && docker image rm cypress
