@@ -172,11 +172,7 @@ COPY --from=build-stage /app/nginx-$ENV.conf /etc/nginx/nginx.conf
 
 ![](images/ec2-instances.png)
 
-## Servers
-
-[TEST Server](http://ec2-52-59-226-235.eu-central-1.compute.amazonaws.com:8080)
-
-[PROD Server](http://ec2-3-126-245-149.eu-central-1.compute.amazonaws.com:8080)
+Terminated.
 
 ## Development enviroment
 
@@ -193,6 +189,7 @@ For tests:
 `$ go test --tags dev ./...`
 
 #### APIs
+
 `[POST]` `api/v1/addTodo` 
 
 `$ curl -H "Content-type: application/json" localhost:3000/api/v1/getTodoList`
@@ -200,6 +197,10 @@ For tests:
 `[GET]` `api/v1/getTodolist` 
 
 `$ curl -H "Content-type: application/json" -X POST -d '{"task_description":"dummy"}' localhost:3000/api/v1/addTodo`
+
+`[GET]` `api/v1/deleteAllTodos`
+
+`$ curl -H "Content-type: application/json" localhost:3000/api/v1/deleteAllTodos`
 
 For the frontend development server you can run 
 
