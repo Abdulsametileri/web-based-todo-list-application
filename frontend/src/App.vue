@@ -3,7 +3,8 @@
     <h1>Todo App</h1>
 
     <input id="todo-input" v-model="todo"/>
-    <button @click="addTodo">Add</button>
+    <button id="addTodo" @click="addTodo">Add</button>
+    <button id="deleteAll" @click="deleteAllTodos">Delete All</button>
 
     <section class="todo-list">
       <p v-for="(todo, index) in todoList" :key="index">{{ index + 1 }}. {{ todo.description }}</p>
@@ -37,6 +38,15 @@ export default {
         this.error = e
       } finally {
         this.todo = ''
+      }
+    },
+    async deleteAllTodos() {
+      try {
+        await API.deleteAllTodos()
+        this.todoList = []
+      } catch (e) {
+        console.error(e)
+        this.error = e
       }
     }
   },

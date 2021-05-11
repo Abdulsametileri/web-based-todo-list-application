@@ -7,8 +7,17 @@ describe('My First Test', () => {
   })
   it('Type todo and click to add new todo', () => {
     cy.get('input').type('testtset')
-    cy.get('button').click()
+    cy.get('#addTodo').click()
     cy.get('.todo-list').contains('testtset')
     cy.get('input').empty
+  })
+  it('Given I have multiple inputs, When I click delete all button, ' +
+      'then I should I see empty list?', () => {
+    cy.get('input').type('item1')
+    cy.get('#addTodo').click()
+    cy.get('input').type('item2')
+    cy.get('#addTodo').click()
+    cy.get('#deleteAll').click()
+    cy.get('.todo-list').find('p').should('have.length', 0)
   })
 })

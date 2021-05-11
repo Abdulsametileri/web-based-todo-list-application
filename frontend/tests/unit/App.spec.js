@@ -17,7 +17,7 @@ describe('App.vue', () => {
         const input = wrapper.find('input')
         await input.setValue(inputToAdd)
 
-        const button = wrapper.find('button')
+        const button = wrapper.find('#addTodo')
         await button.trigger('click')
         await flushPromises();
 
@@ -25,5 +25,25 @@ describe('App.vue', () => {
         expect(wrapper.vm.todoList[0].id).toEqual(0)
         expect(wrapper.vm.todoList[0].description).toBe(inputToAdd)
         expect(wrapper.find('p').text()).toBe('1. ' + inputToAdd)
+    })
+    it('delete all button exist', async () => {
+        const wrapper = shallowMount(App)
+
+        const deleteAllButton = wrapper.find('#deleteAll')
+
+        expect(deleteAllButton.text()).toContain("Delete All")
+    })
+    it('delete all click propogates', async () => {
+        const deleteAllTodos = jest.fn()
+        const wrapper = shallowMount(App, {
+            methods: {
+                deleteAllTodos
+            }
+        })
+
+        const deleteAllButton = wrapper.find('#deleteAll')
+
+        await deleteAllButton.trigger('click')
+        expect(deleteAllTodos).toBeCalled()
     })
 })

@@ -16,7 +16,6 @@ func main() {
 	if !config.IsDebug {
 		gin.SetMode(gin.ReleaseMode)
 	}
-
 	var router = gin.New()
 
 	if config.IsDebug {
@@ -34,6 +33,7 @@ func main() {
 	{
 		v1.GET("getTodoList", todoCtl.GetTodoList)
 		v1.POST("addTodo", todoCtl.AddTodo)
+		v1.GET("deleteAllTodos", todoCtl.DeleteAllTodos)
 	}
 
 	srv := &http.Server{
@@ -48,6 +48,7 @@ func main() {
 	}()
 
 	c := make(chan os.Signal, 1)
+
 	signal.Notify(c, os.Interrupt)
 	signal.Notify(c, os.Kill)
 
@@ -60,7 +61,11 @@ func main() {
 
 func corsMiddleware() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Writer.Header().Set("Access-Control-Allow-Origin", config.AppUrl)
+		if config.IsDebug {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
+		} else {
+			c.Writer.Header().Set("Access-Control-Allow-Origin", config.AppUrl)
+		}
 
 		c.Writer.Header().Set("Access-Control-Max-Age", "86400")
 		c.Writer.Header().Set("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")

@@ -34,6 +34,12 @@ export class API {
             })
             .then(r => r.data)
     }
+
+    async deleteAllTodos() {
+        return axios
+            .get(this.withPath('/deleteAllTodos'))
+            .then(r => r.data)
+    }
 }
 
 export default new API(process.env.VUE_APP_BASE_API_URL);

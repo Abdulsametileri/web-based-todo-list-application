@@ -99,4 +99,21 @@ func TestTodoController(t *testing.T) {
 			}
 		})
 	})
+
+	t.Run("deleteAllTodos", func(t *testing.T) {
+		t.Run("Delete all todos", func(t *testing.T) {
+			w := httptest.NewRecorder()
+			c, _ := gin.CreateTestContext(w)
+
+			todoCtl.DeleteAllTodos(c)
+
+			assert.Equal(t, http.StatusOK, w.Code)
+
+			resBody := Props{}
+			json.NewDecoder(w.Body).Decode(&resBody)
+
+			assert.Equal(t, resBody.Message, MsgAllTodoDeleted)
+			assert.Empty(t, resBody.Data)
+		})
+	})
 }

@@ -16,6 +16,7 @@ var todoDatabase map[int]Todo
 
 var (
 	MsgTodoAdded              = "Todo has been succesfully added."
+	MsgAllTodoDeleted         = "All todos has been successfully deleted."
 	ErrTodoDescriptionIsEmpty = errors.New("Todo description cannnot be empty.")
 )
 
@@ -26,6 +27,7 @@ type TodoInput struct {
 type TodoController interface {
 	GetTodoList(c *gin.Context)
 	AddTodo(c *gin.Context)
+	DeleteAllTodos(c *gin.Context)
 }
 
 type todoController struct {
@@ -71,4 +73,11 @@ func (t todoController) AddTodo(c *gin.Context) {
 	todoDatabase[todoId] = addedTodo
 
 	t.base.Data(c, http.StatusCreated, addedTodo, MsgTodoAdded)
+}
+
+// curl -H "Content-type: application/json" localhost:3000/api/v1/deleteAllTodos
+func (t todoController) DeleteAllTodos(c *gin.Context) {
+	todoDatabase = make(map[int]Todo, 0)
+
+	t.base.Data(c, http.StatusOK, todoDatabase, MsgAllTodoDeleted)
 }
