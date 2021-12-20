@@ -1,30 +1,34 @@
 import {shallowMount} from "@vue/test-utils";
 import flushPromises from "flush-promises";
 import App from "@/App";
+import API from '@/api'
 
-jest.mock("@/api", () => ({
-    getTodoList: () => Promise.resolve({data: []}),
-    addTodo: (todo) => Promise.resolve({data: {id: 0, description: 'dummy todo'}})
-}));
+jest.mock("@/api")
 
 describe('App.vue', () => {
     it('should add a todo when user enters input and clicks the button', async () => {
-        const inputToAdd = "dummy todo"
+        const inputTodo = {
+            id: 1,
+            description: "dummy todo"
+        }
+
+        API.getTodoList.mockResolvedValue({data: []})
+        API.addTodo.mockResolvedValue({ data: inputTodo })
 
         const wrapper = shallowMount(App)
         await flushPromises();
 
         const input = wrapper.find('input')
-        await input.setValue(inputToAdd)
+        await input.setValue(inputTodo.description)
 
         const button = wrapper.find('#addTodo')
         await button.trigger('click')
         await flushPromises();
 
         expect(wrapper.vm.todo).toBe('')
-        expect(wrapper.vm.todoList[0].id).toEqual(0)
-        expect(wrapper.vm.todoList[0].description).toBe(inputToAdd)
-        expect(wrapper.find('p').text()).toBe('1. ' + inputToAdd)
+        expect(wrapper.vm.todoList[0].id).toEqual(inputTodo.id)
+        expect(wrapper.vm.todoList[0].description).toBe(inputTodo.description)
+        expect(wrapper.find('p').text()).toBe('1. ' + inputTodo.description)
     })
     it('delete all button exist', async () => {
         const wrapper = shallowMount(App)
