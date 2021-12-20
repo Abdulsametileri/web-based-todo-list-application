@@ -8,6 +8,7 @@
     "build-for-test": "vue-cli-service build --mode test",
     "build-for-prod": "vue-cli-service build --mode production",
     "test:unit": "vue-cli-service test:unit",
+    "test:pact": "vue-cli-service test:unit pact/",
     "test:e2e": "vue-cli-service test:e2e --mode test --headless --url http://ec2-52-59-226-235.eu-central-1.compute.amazonaws.com:8080",
     "test:e2e-debug": "vue-cli-service test:e2e --headless --url http://localhost:8080",
     "test:api": "dredd api-description.apib http://ec2-3-126-245-149.eu-central-1.compute.amazonaws.com:8080"
@@ -21,6 +22,7 @@
     "vue": "^2.6.11"
   },
   "devDependencies": {
+    "@pact-foundation/pact": "^9.17.0",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-e2e-cypress": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
@@ -30,6 +32,7 @@
     "babel-eslint": "^10.1.0",
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
+    "jest-pact": "^0.9.1",
     "node-sass": "^4.12.0",
     "sass-loader": "^8.0.2",
     "vue-template-compiler": "^2.6.11"
@@ -51,7 +54,8 @@
       {
         "files": [
           "**/__tests__/*.{j,t}s?(x)",
-          "**/tests/unit/**/*.spec.{j,t}s?(x)"
+          "**/tests/unit/**/*.spec.{j,t}s?(x)",
+          "**/tests/pact/**/*.spec.{j,t}s?(x)"
         ],
         "env": {
           "jest": true
@@ -65,7 +69,11 @@
     "not dead"
   ],
   "jest": {
-    "preset": "@vue/cli-plugin-unit-jest"
+    "preset": "@vue/cli-plugin-unit-jest",
+    "transform": {
+      "^.+\\\\.js$": "babel-jest",
+      ".*\\.(vue)$": "vue-jest"
+    }
   },
   "description": "## Project setup ``` yarn install ```",
   "main": "babel.config.js",
